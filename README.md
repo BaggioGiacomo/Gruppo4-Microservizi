@@ -5,4 +5,4 @@
 - Caragata Adrian
 - Zampol Mateus
 - Piaia Paolo
-- *Zanotto Andrea
+- *Zanotto Andrea*
