@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31919.166
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{4C9E2F17-AAE7-40C8-85F5-234D10692539}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gruppo4MicroserviziDTO", "..\Gruppo4-Microservizi-DTO\Gruppo4MicroserviziDTO.csproj", "{21D15706-49CE-4AC5-80D1-FD6C71FE35BD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4C9E2F17-AAE7-40C8-85F5-234D10692539}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C9E2F17-AAE7-40C8-85F5-234D10692539}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C9E2F17-AAE7-40C8-85F5-234D10692539}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C9E2F17-AAE7-40C8-85F5-234D10692539}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21D15706-49CE-4AC5-80D1-FD6C71FE35BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21D15706-49CE-4AC5-80D1-FD6C71FE35BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21D15706-49CE-4AC5-80D1-FD6C71FE35BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21D15706-49CE-4AC5-80D1-FD6C71FE35BD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6B1E81F2-D074-4F82-A03F-267CF68BF4DB}
+	EndGlobalSection
+EndGlobal
