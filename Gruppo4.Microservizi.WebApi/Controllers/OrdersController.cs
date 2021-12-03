@@ -2,26 +2,23 @@
 using Gruppo4.Microservizi.AppCore.Interfaces.Services;
 using Gruppo4.Microservizi.AppCore.Models;
 using Gruppo4.Microservizi.WebApi.DTOs;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Gruppo4.Microservizi.WebApi.Controllers
 {
-    [Route("api/v1/[controller]/Orders")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class OrdersController : ControllerBase
     {
         private readonly IOrderService _orderService;
-        private readonly IConfiguration _configuration;
-        private readonly string _connectionString;
 
-        public OrdersController(IOrderService orderService, IConfiguration configuration)
+        public OrdersController(IOrderService orderService)
         {
             _orderService = orderService;
-            _configuration = configuration;
-            _connectionString = _configuration.GetConnectionString("LocalDB");
+            
         }
 
+        [HttpGet]
         [Route("{guid}")]
         public async Task<IActionResult> GetOrderAsync(Guid guid)
         {
@@ -32,6 +29,14 @@ namespace Gruppo4.Microservizi.WebApi.Controllers
             }
 
             return Ok(order);
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> GetOrders()
+        {
+            var orders = await _orderService.GetOrders();
+            return Ok(orders); 
         }
 
         [HttpPost]
