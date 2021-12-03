@@ -23,6 +23,11 @@ namespace Gruppo4.Microservizi.AppCore.Services
             await _productRepository.DeleteProduct(id);
         }
 
+        public async Task<Product> GetProductById(int id)
+        {
+            return await _productRepository.GetProductById(id);
+        }
+
         public async Task<int> GetStockQuantity(int id)
         {
             return await _productRepository.GetStockQuantity(id);
