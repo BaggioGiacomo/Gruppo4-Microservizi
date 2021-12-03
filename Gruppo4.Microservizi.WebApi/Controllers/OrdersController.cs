@@ -12,10 +12,14 @@ namespace Gruppo4.Microservizi.WebApi.Controllers
     public class OrdersController : ControllerBase
     {
         private readonly IOrderService _orderService;
+        private readonly IConfiguration _configuration;
+        private readonly string _connectionString;
 
-        public OrdersController(IOrderService orderService)
+        public OrdersController(IOrderService orderService, IConfiguration configuration)
         {
             _orderService = orderService;
+            _configuration = configuration;
+            _connectionString = _configuration.GetConnectionString("LocalDB");
         }
 
         [Route("{guid}")]
