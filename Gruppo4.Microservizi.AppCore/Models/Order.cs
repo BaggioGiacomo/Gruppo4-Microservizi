@@ -9,10 +9,11 @@ namespace Gruppo4.Microservizi.AppCore.Models
     public class Order
     {
         public Guid Id { get; set; }
-        public int IdCliente { get; set; }
+        public int CustomerId { get; set; }
         public decimal TotalPrice { get; set; }
         public decimal DiscountAmount { get; set; }
         public decimal DiscountedPrice { get; set; }
-        public IEnumerable<Product> Products { get; set; }
+        public IList<Product> Products { get; set; } = new List<Product>();
+        public IList<Coupon> Coupons { get; set; } = new List<Coupon>();
     }
 }

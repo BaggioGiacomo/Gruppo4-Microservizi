@@ -2,18 +2,14 @@
 
 namespace Gruppo4.Microservizi.WebApi.DTOs
 {
-    public class OrderDTO
+    public class OrderInsertDTO
     {
         [Required]
-        public int IdCliente { get; set; }
-        [Required]
-        public decimal TotalPrice { get; set; }
-        [Required]
-        public decimal DiscountAmount { get; set; }
-        [Required]
-        public decimal DiscountedPrice { get; set; }
+        public int CustomerId { get; set; }
         [Required]
         public IEnumerable<ProductInOrder> Products { get; set; }
+        [Required]
+        public IEnumerable<string> Coupons { get; set; }
     }
 
     public class ProductInOrder

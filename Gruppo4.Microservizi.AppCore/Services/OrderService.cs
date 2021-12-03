@@ -15,12 +15,14 @@ namespace Gruppo4.Microservizi.AppCore.Services
         private readonly IOrderRepository _orderRepository;
         private readonly IProductService _productService;
         private readonly ICustomerService _customerService;
+        private readonly ICouponService _couponService;
 
-        public OrderService(IOrderRepository orderRepository, IProductService productService, ICustomerService customerService)
+        public OrderService(IOrderRepository orderRepository, IProductService productService, ICustomerService customerService, ICouponService couponService)
         {
             _orderRepository = orderRepository;
             _productService = productService;
             _customerService = customerService;
+            _couponService = couponService;
         }
 
         public async Task DeleteOrder(Guid id)
@@ -35,6 +37,18 @@ namespace Gruppo4.Microservizi.AppCore.Services
 
         public async Task InsertOrder(Order order)
         {
+            await CheckStock(order);
+            await _orderRepository.InsertOrder(order);
+        }       
+
+        public async Task UpdateOrder(Order order)
+        {
+            await CheckStock(order);
+            await _orderRepository.UpdateOrder(order);
+        }
+
+        private async Task CheckStock(Order order)
+        {
             var stockChecks = new List<Task<bool>>();
             foreach (var product in order.Products)
             {
@@ -45,17 +59,39 @@ namespace Gruppo4.Microservizi.AppCore.Services
 
             if (!(stockChecksResults.All(v => v)))
             {
+                // TODO: ritornare con l'eccezione la lista dei prodotti che non sono in stock
                 throw new NotEnoughStockException("Some products are missing.");
             }
-            
-            
-
-            await _orderRepository.InsertOrder(order);
         }
-
-        public async Task UpdateOrder(Order order)
+        private async Task CheckCoupons(Order order)
         {
-            await _orderRepository.UpdateOrder(order);
+            var couponChecks = new List<Task<Coupon>>();
+            foreach (var coupon in order.Coupons)
+            {
+                couponChecks.Add(_couponService.GetCoupon(coupon.Code));
+            }
+
+            var couponCheckResults = await Task.WhenAll(couponChecks);
+
+            if(!(couponCheckResults.All(c => c is not null)))
+            {
+                // TODO: ritornare con l'eccezione la lista dei codici coupon non validi
+                throw new InvalidCouponException("Some coupons are invalid.");
+            }
+        }
+        private async Task CheckCustomer(Order order)
+        {
+            var customer = await _customerService.GetCustomerById(order.CustomerId);
+            if(customer is null)
+            {
+                throw new InvalidCustomerIdException($"Customer {order.CustomerId} does not exist.");
+            }
+        }
+        private async Task Validate(Order order)
+        {
+            await CheckCoupons(order);
+            await CheckCustomer(order);
+            await CheckStock(order);
         }
     }
 }
