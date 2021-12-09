@@ -16,6 +16,11 @@ namespace Gruppo4.Microservizi.Persistency.Repositories
         private readonly IConfiguration _configuration;
         private readonly string _connectionString;
 
+        public OrdersRepository()
+        {
+
+        }
+
         public OrdersRepository(IConfiguration configuration)
         {
             _configuration = configuration;
@@ -29,12 +34,13 @@ namespace Gruppo4.Microservizi.Persistency.Repositories
 
         public Task<Order> GetOrder(Guid id)
         {
-            throw new NotImplementedException();
+            return null;
         }
 
-        public Task<IEnumerable<Order>> GetOrders()
+        public async Task<IEnumerable<Order>> GetOrders()
         {
-            throw new NotImplementedException();
+            List<Order> orders = new();
+            return orders;
         }
 
         public Task InsertOrder(Order order)
