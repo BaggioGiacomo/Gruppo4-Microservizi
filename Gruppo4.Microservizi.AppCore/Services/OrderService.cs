@@ -47,6 +47,10 @@ namespace Gruppo4.Microservizi.AppCore.Services
         public async Task InsertOrder(Order order)
         {
             await CheckStock(order);
+            order.TotalPrice = await CalculateTotal(order);
+            var discount = await CalculateDiscount(order);
+            order.DiscountAmount = (order.TotalPrice - discount.DiscountAbsolute) * (1 - discount.DiscountPercentage / 100);
+            order.DiscountedPrice = order.TotalPrice - order.DiscountAmount;
             await _orderRepository.InsertOrder(order);
         }       
 
@@ -101,6 +105,29 @@ namespace Gruppo4.Microservizi.AppCore.Services
             await CheckCoupons(order);
             await CheckCustomer(order);
             await CheckStock(order);
+        }
+        private async Task<decimal> CalculateTotal(Order order)
+        {
+            decimal total = 0;
+            foreach (var product in order.Products)
+	        {
+                var productInfo = await _productService.GetProductById(product.Id);
+                total += productInfo.Price;
+	        }
+            return total;
+        }
+        private async Task<DiscountInfo> CalculateDiscount(Order order)
+        {
+            var discount = new DiscountInfo();
+
+            foreach (var coupon in order.Coupons)
+            {
+                var couponInfo = await _couponService.GetCoupon(coupon.Code);
+                discount.DiscountAbsolute += couponInfo.DiscountInfo.DiscountAbsolute;
+                discount.DiscountPercentage += couponInfo.DiscountInfo.DiscountPercentage;
+            }
+
+            return discount;
         }
     }
 }

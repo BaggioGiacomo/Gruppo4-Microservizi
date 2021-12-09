@@ -12,11 +12,7 @@ namespace Gruppo4.Microservizi.AppCore.Services
     public class ProductService : IProductService
     {
         private readonly IProductRepository _productRepository;
-
-        public ProductService()
-        {
-
-        }        
+  
 
         public ProductService(IProductRepository productRepository)
         {
@@ -26,6 +22,11 @@ namespace Gruppo4.Microservizi.AppCore.Services
         public async Task DeleteProduct(int id)
         {
             await _productRepository.DeleteProduct(id);
+        }
+
+        public async Task<Product> GetProductById(int id)
+        {
+            return await _productRepository.GetProductById(id);
         }
 
         public async Task<int> GetStockQuantity(int id)

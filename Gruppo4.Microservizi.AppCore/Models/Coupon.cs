@@ -9,7 +9,13 @@ namespace Gruppo4.Microservizi.AppCore.Models
     public class Coupon
     {
         public string Code { get; set; }
+        public DiscountInfo DiscountInfo { get; set; }
+
+    }
+
+    public class DiscountInfo
+    {
         public decimal DiscountPercentage { get; set; }
-        public decimal DiscountAmount { get; set; }
+        public decimal DiscountAbsolute { get; set; }
     }
 }

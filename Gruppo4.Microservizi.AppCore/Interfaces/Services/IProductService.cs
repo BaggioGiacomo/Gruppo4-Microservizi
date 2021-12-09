@@ -15,5 +15,6 @@ namespace Gruppo4.Microservizi.AppCore.Interfaces.Services
         public Task DeleteProduct(int id);
         public Task InsertProduct(Product product);
         public Task UpdateProduct(Product product);
+        public Task<Product> GetProductById(int id);
     }
 }
