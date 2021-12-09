@@ -45,7 +45,6 @@ namespace Gruppo4.Microservizi.WebApi.Controllers
         {
             var newOrder = new Order
             {
-                Id = Guid.NewGuid(),
                 CustomerId = order.CustomerId,
                 Products = new List<Product>(),
                 Coupons = new List<Coupon>()
