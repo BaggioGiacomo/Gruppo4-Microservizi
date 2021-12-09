@@ -1,8 +1,10 @@
 ﻿using Gruppo4.Microservizi.AppCore.Exceptions;
 using Gruppo4.Microservizi.AppCore.Interfaces.Services;
 using Gruppo4.Microservizi.AppCore.Models;
-using Gruppo4.Microservizi.WebApi.DTOs;
+using Gruppo4MicroserviziDTO.DTOs;
+using MassTransit;
 using Microsoft.AspNetCore.Mvc;
+using Gruppo4.Microservizi.WebApi.DTOs;
 
 namespace Gruppo4.Microservizi.WebApi.Controllers
 {
@@ -11,11 +13,12 @@ namespace Gruppo4.Microservizi.WebApi.Controllers
     public class OrdersController : ControllerBase
     {
         private readonly IOrderService _orderService;
+        private readonly IPublishEndpoint _endpoint;
 
-        public OrdersController(IOrderService orderService)
+        public OrdersController(IOrderService orderService, IPublishEndpoint endpoint)
         {
-            _orderService = orderService;
-            
+            _orderService = orderService;      
+            _endpoint = endpoint;
         }
 
         [HttpGet]
@@ -87,7 +90,50 @@ namespace Gruppo4.Microservizi.WebApi.Controllers
 
             var createdOrder = await _orderService.GetOrder(newOrder.Id);
 
+            var newOrderEvent = new NewOrderEvent
+            {
+                Id = createdOrder.Id,
+                IdCliente = createdOrder.CustomerId,
+                TotalPrice = createdOrder.TotalPrice,
+                DiscountAmount = createdOrder.DiscountAmount,
+                DiscountedPrice = createdOrder.DiscountedPrice                
+            };
+
+            foreach (var product in createdOrder.Products)
+            {
+                newOrderEvent.Products.Add(new Gruppo4MicroserviziDTO.Models.ProductInOrder
+                {
+                    ProductId = product.Id,
+                    OrderedQuantity = product.Quantity
+                });
+            }
+
+            await _endpoint.Publish(newOrderEvent);
+
             return CreatedAtAction(nameof(GetOrderAsync), createdOrder);
+        }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<IActionResult> DeleteAsync(Guid id)
+        {
+            var order = await _orderService.GetOrder(id);
+            var deletedOrderEvent = new DeletedOrderEvent
+            {
+                Id = id
+            };
+
+            foreach (var product in order.Products)
+            {
+                deletedOrderEvent.Products.Add(new Gruppo4MicroserviziDTO.Models.ProductInOrder
+                {
+                    ProductId=product.Id,
+                    OrderedQuantity=product.Quantity
+                });
+            }
+
+            await _orderService.DeleteOrder(id);
+            return Ok();
         }
     }
 }
