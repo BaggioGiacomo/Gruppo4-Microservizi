@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Consumers\" />
     <PackageReference Include="Gruppo3.ClientiDTO.Domain" Version="1.0.0" />
     <PackageReference Include="MacNuget.Warehouse.Events" Version="0.0.1" />
     <PackageReference Include="MassTransit" Version="7.3.0" />
