@@ -101,7 +101,7 @@ namespace Gruppo4.Microservizi.WebApi.Controllers
             var newOrderEvent = new NewOrderEvent
             {
                 Id = createdOrder.Id,
-                IdCliente = createdOrder.CustomerId,
+                IdCliente = createdOrder.Customer_Id,
                 TotalPrice = createdOrder.TotalPrice,
                 DiscountAmount = createdOrder.DiscountAmount,
                 DiscountedPrice = createdOrder.DiscountedPrice                
@@ -139,6 +139,8 @@ namespace Gruppo4.Microservizi.WebApi.Controllers
                     OrderedQuantity=product.Quantity
                 });
             }
+
+            await _endpoint.Publish(deletedOrderEvent);
 
             await _orderService.DeleteOrder(id);
             return Ok();
