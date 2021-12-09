@@ -3,6 +3,7 @@ using Gruppo4.Microservizi.AppCore.Interfaces.Data;
 using Gruppo4.Microservizi.AppCore.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace Gruppo4.Microservizi.Persistency.Repositories
     public class OrdersRepository : IOrderRepository
     {
         private readonly IConfiguration _configuration;
-        private readonly string _connectionString;
+        private readonly string _connectionString = "User ID=root;Password=example;Host=localhost;Port=3307;Database=gruppo4-microservizi;Direct=true;Protocol=TCP;Compress=false;Pooling=true;Min Pool Size=0;Max Pool Size=100;Connection Lifetime=0;";
 
         public OrdersRepository()
         {
@@ -24,7 +25,6 @@ namespace Gruppo4.Microservizi.Persistency.Repositories
         public OrdersRepository(IConfiguration configuration)
         {
             _configuration = configuration;
-            _connectionString = _configuration.GetConnectionString("LocalDB");
         }
 
         public Task DeleteOrder(Guid id)
@@ -39,8 +39,11 @@ namespace Gruppo4.Microservizi.Persistency.Repositories
 
         public async Task<IEnumerable<Order>> GetOrders()
         {
-            List<Order> orders = new();
-            return orders;
+            using var connection = new MySqlConnection(_connectionString);
+            const string querySelectAll = @"
+SELECT * FROM Ordine
+";
+             return await connection.QueryAsync<Order>(querySelectAll);
         }
 
         public Task InsertOrder(Order order)
@@ -48,8 +51,7 @@ namespace Gruppo4.Microservizi.Persistency.Repositories
 
             if (order != null)
             {
-                var cs = _configuration.GetConnectionString(_connectionString);
-                using var connection = new SqlConnection(cs);
+                using var connection = new MySqlConnection(_connectionString);
                 const string queryInsert = @"
 INSERT INTO Ordine
            (Id,PrezzoTot,PrezzoScontato,Sconto,Cliente_Id)
