@@ -1,5 +1,7 @@
-﻿using Gruppo4.Microservizi.AppCore.Interfaces.Data;
+﻿using Dapper;
+using Gruppo4.Microservizi.AppCore.Interfaces.Data;
 using Gruppo4.Microservizi.AppCore.Models;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -37,12 +39,25 @@ namespace Gruppo4.Microservizi.Persistency.Repositories
 
         public Task InsertOrder(Order order)
         {
-            throw new NotImplementedException();
+
+            if (order != null)
+            {
+                var cs = _configuration.GetConnectionString(_connectionString);
+                using var connection = new SqlConnection(cs);
+                const string queryInsert = @"
+INSERT INTO Ordine
+           (Id,PrezzoTot,PrezzoScontato,Sconto,Cliente_Id)
+     VALUES
+           (@Id,@PrezzoTot,@PrezzoScontato,@Sconto,@Cliente_Id)";
+                connection.Execute(queryInsert, order);
+                
+            }
+            return null;
         }
 
-        public Task UpdateOrder(Order order)
-        {
-            throw new NotImplementedException();
-        }
+    public Task UpdateOrder(Order order)
+    {
+        throw new NotImplementedException();
     }
+}
 }
