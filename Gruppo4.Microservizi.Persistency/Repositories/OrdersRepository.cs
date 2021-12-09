@@ -26,9 +26,15 @@ namespace Gruppo4.Microservizi.Persistency.Repositories
             _configuration = configuration;
         }
 
-        public Task DeleteOrder(Guid id)
+        public async Task DeleteOrder(Guid id)
         {
-            throw new NotImplementedException();
+            using var connection = new SqlConnection(_connectionString);
+
+            const string queryDelete = "DELETE FROM Orders WHERE Id=@Id";
+
+          
+           connection.Execute(queryDelete, new { Id = id});
+            
         }
 
         public async Task<Order> GetOrder(Guid id)

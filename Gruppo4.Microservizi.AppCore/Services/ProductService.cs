@@ -12,12 +12,10 @@ namespace Gruppo4.Microservizi.AppCore.Services
     public class ProductService : IProductService
     {
         private readonly IProductRepository _productRepository;
-
         public ProductService()
         {
 
         }
-
         public ProductService(IProductRepository productRepository)
         {
             _productRepository = productRepository;

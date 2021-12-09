@@ -39,6 +39,15 @@ namespace Gruppo4.Microservizi.WebApi.Controllers
             return Ok(orders); 
         }
 
+        [HttpDelete]
+        public async Task<IActionResult> DeleteOrders(Guid guid)
+        {
+            await _orderService.DeleteOrder(guid);
+            return Ok();
+        }
+
+
+
         [HttpPost]
         [HttpPut]
         public async Task<IActionResult> InsertOrderAsync(OrderInsertDTO order)
