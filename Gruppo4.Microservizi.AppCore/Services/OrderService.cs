@@ -90,10 +90,10 @@ namespace Gruppo4.Microservizi.AppCore.Services
         }
         private async Task CheckCustomer(Order order)
         {
-            var customer = await _customerService.GetCustomerById(order.CustomerId);
+            var customer = await _customerService.GetCustomerById(order.Customer_Id);
             if(customer is null)
             {
-                throw new InvalidCustomerIdException($"Customer {order.CustomerId} does not exist.");
+                throw new InvalidCustomerIdException($"Customer {order.Customer_Id} does not exist.");
             }
         }
         private async Task Validate(Order order)

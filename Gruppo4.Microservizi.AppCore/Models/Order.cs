@@ -11,7 +11,7 @@ namespace Gruppo4.Microservizi.AppCore.Models
         public Order(string id, int customerId, decimal totalPrice, decimal discountAmount, decimal discountedPrice, IList<Product> products, IList<Coupon> coupons)
         {
             Id = Guid.Parse(id);
-            CustomerId = customerId;
+            Customer_Id = customerId;
             TotalPrice = totalPrice;
             DiscountAmount = discountAmount;
             DiscountedPrice = discountedPrice;
@@ -24,7 +24,7 @@ namespace Gruppo4.Microservizi.AppCore.Models
         }
 
         public Guid Id { get; }
-        public int CustomerId { get; set; }
+        public int Customer_Id { get; set; }
         public decimal TotalPrice { get; set; }
         public decimal DiscountAmount { get; set; }
         public decimal DiscountedPrice { get; set; }
