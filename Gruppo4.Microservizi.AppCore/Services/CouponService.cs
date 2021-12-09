@@ -13,6 +13,11 @@ namespace Gruppo4.Microservizi.AppCore.Services
     {
         private readonly ICouponRepository _couponRepository;
 
+        public CouponService()
+        {
+
+        }
+
         public CouponService(ICouponRepository couponRepository)
         {
             _couponRepository = couponRepository;

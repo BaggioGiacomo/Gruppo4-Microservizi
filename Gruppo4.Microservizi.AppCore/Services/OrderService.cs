@@ -17,6 +17,10 @@ namespace Gruppo4.Microservizi.AppCore.Services
         private readonly ICustomerService _customerService;
         private readonly ICouponService _couponService;
 
+        public OrderService()
+        {
+
+        }
         public OrderService(IOrderRepository orderRepository, IProductService productService, ICustomerService customerService, ICouponService couponService)
         {
             _orderRepository = orderRepository;
