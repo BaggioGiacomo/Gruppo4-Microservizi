@@ -24,7 +24,7 @@ namespace Gruppo4.Microservizi.AppCore.Models
         }
 
         public Guid Id { get; set; } = Guid.NewGuid();
-        public int CustomerId { get; set; }
+        public int Customer_Id { get; set; }
         public decimal TotalPrice { get; set; }
         public decimal DiscountAmount { get; set; }
         public decimal DiscountedPrice { get; set; }
