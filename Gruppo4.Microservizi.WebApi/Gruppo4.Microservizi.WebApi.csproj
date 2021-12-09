@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Gruppo4.Microservizi.AppCore\Gruppo4.Microservizi.AppCore.csproj" />
+    <ProjectReference Include="..\Gruppo4.Microservizi.Persistency\Gruppo4.Microservizi.Persistency.csproj" />
   </ItemGroup>
 
 </Project>
