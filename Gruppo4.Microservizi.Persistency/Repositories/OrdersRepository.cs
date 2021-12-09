@@ -15,8 +15,7 @@ namespace Gruppo4.Microservizi.Persistency.Repositories
     public class OrdersRepository : IOrderRepository
     {
         private readonly IConfiguration _configuration;
-        private readonly string _connectionString = "User ID=root;Password=example;Host=localhost;Port=3307;Database=gruppo4-microservizi;Direct=true;Protocol=TCP;Compress=false;Pooling=true;Min Pool Size=0;Max Pool Size=100;Connection Lifetime=0;";
-
+        private readonly string _connectionString = "";
         public OrdersRepository()
         {
 
@@ -39,11 +38,13 @@ namespace Gruppo4.Microservizi.Persistency.Repositories
 
         public async Task<IEnumerable<Order>> GetOrders()
         {
-            using var connection = new MySqlConnection(_connectionString);
-            const string querySelectAll = @"
-SELECT * FROM Ordine
-";
-             return await connection.QueryAsync<Order>(querySelectAll);
+            using var connection = new SqlConnection(_connectionString);
+
+             List<Order> list = new List<Order>();
+
+             const string querySelectAll = "SELECT * FROM Ordine";
+             
+            return await connection.QueryAsync<Order>(querySelectAll);
         }
 
         public Task InsertOrder(Order order)
