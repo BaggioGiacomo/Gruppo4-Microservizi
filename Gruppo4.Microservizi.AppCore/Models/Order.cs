@@ -8,6 +8,21 @@ namespace Gruppo4.Microservizi.AppCore.Models
 {
     public class Order
     {
+        public Order(string id, int customerId, decimal totalPrice, decimal discountAmount, decimal discountedPrice, IList<Product> products, IList<Coupon> coupons)
+        {
+            Id = Guid.Parse(id);
+            Customer_Id = customerId;
+            TotalPrice = totalPrice;
+            DiscountAmount = discountAmount;
+            DiscountedPrice = discountedPrice;
+            Products = products;
+            Coupons = coupons;
+        }
+        public Order()
+        {
+            Id = new Guid();
+        }
+
         public Guid Id { get; set; } = Guid.NewGuid();
         public int CustomerId { get; set; }
         public decimal TotalPrice { get; set; }
@@ -15,5 +30,7 @@ namespace Gruppo4.Microservizi.AppCore.Models
         public decimal DiscountedPrice { get; set; }
         public IList<Product> Products { get; set; } = new List<Product>();
         public IList<Coupon> Coupons { get; set; } = new List<Coupon>();
+
+        
     }
 }
