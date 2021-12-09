@@ -5,6 +5,15 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <UserSecretsId>5a1262cb-0d9b-45dc-bb2d-87c121ab025e</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Gruppo4.Microservizi.AppCore\Gruppo4.Microservizi.AppCore.csproj" />
+  </ItemGroup>
 
 </Project>

@@ -35,6 +35,11 @@ namespace Gruppo4.Microservizi.AppCore.Services
             return await _orderRepository.GetOrder(id); 
         }
 
+        public async Task<IEnumerable<Order>> GetOrders()
+        {
+            return await _orderRepository.GetOrders();
+        }
+
         public async Task InsertOrder(Order order)
         {
             await CheckStock(order);
