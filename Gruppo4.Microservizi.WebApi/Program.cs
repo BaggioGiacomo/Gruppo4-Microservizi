@@ -2,6 +2,8 @@ using Gruppo4.Microservizi.AppCore.Interfaces.Data;
 using Gruppo4.Microservizi.AppCore.Interfaces.Services;
 using Gruppo4.Microservizi.AppCore.Services;
 using Gruppo4.Microservizi.Persistency.Repositories;
+using Gruppo4.Microservizi.Persistency.Repositories.RepositoriesContrib;
+using Gruppo4.Microservizi.Persistency.RepositoriesContrib;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,10 +14,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IOrderService, OrderService>();
-builder.Services.AddScoped<IOrderRepository, OrdersRepository>();
 builder.Services.AddScoped<ICouponService, CouponService>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IProductRepository, ProductRepositoryContrib>();
+builder.Services.AddScoped<IOrderRepository, OrdersRepositoryContrib>();
+builder.Services.AddScoped<ICouponRepository, CouponsRepositoryContrib>();
+builder.Services.AddScoped<ICouponService, CouponService>();
 
 var app = builder.Build();
 
