@@ -13,12 +13,12 @@ namespace Gruppo4.Microservizi.WebApi.Controllers
     public class OrdersController : ControllerBase
     {
         private readonly IOrderService _orderService;
-        private readonly IPublishEndpoint _endpoint;
+        //private readonly IPublishEndpoint _endpoint;
 
-        public OrdersController(IOrderService orderService, IPublishEndpoint endpoint)
+        public OrdersController(IOrderService orderService/*, IPublishEndpoint endpoint*/)
         {
             _orderService = orderService;      
-            _endpoint = endpoint;
+            //_endpoint = endpoint;
         }
 
         [HttpGet]
@@ -41,14 +41,6 @@ namespace Gruppo4.Microservizi.WebApi.Controllers
             var orders = await _orderService.GetOrders();
             return Ok(orders); 
         }
-
-        [HttpDelete]
-        public async Task<IActionResult> DeleteOrders(Guid guid)
-        {
-            await _orderService.DeleteOrder(guid);
-            return Ok();
-        }
-
 
 
         [HttpPost]
@@ -116,7 +108,7 @@ namespace Gruppo4.Microservizi.WebApi.Controllers
                 });
             }
 
-            await _endpoint.Publish(newOrderEvent);
+            //await _endpoint.Publish(newOrderEvent);
 
             return CreatedAtAction(nameof(GetOrderAsync), createdOrder);
         }
@@ -125,7 +117,7 @@ namespace Gruppo4.Microservizi.WebApi.Controllers
         [Route("{id}")]
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
-            var order = await _orderService.GetOrder(id);
+            /*var order = await _orderService.GetOrder(id);
             var deletedOrderEvent = new DeletedOrderEvent
             {
                 Id = id
@@ -141,7 +133,7 @@ namespace Gruppo4.Microservizi.WebApi.Controllers
             }
 
             await _endpoint.Publish(deletedOrderEvent);
-
+            */
             await _orderService.DeleteOrder(id);
             return Ok();
         }
