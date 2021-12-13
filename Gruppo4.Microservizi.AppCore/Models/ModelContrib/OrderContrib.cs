@@ -1,36 +1,33 @@
-﻿using System;
+﻿using Dapper.Contrib.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Gruppo4.Microservizi.AppCore.Models
+namespace Gruppo4.Microservizi.AppCore.Models.ModelContrib
 {
-    public class Order
+    [Table("Orders")]
+    public class OrderContrib
     {
-        public Order(string id, int customerId, decimal totalPrice, decimal discountAmount, decimal discountedPrice, IList<Product> products, IList<Coupon> coupons)
+        public OrderContrib(string id, int customerId, decimal totalPrice, decimal discountAmount, decimal discountedPrice)
         {
             Id = Guid.Parse(id);
             Customer_Id = customerId;
             TotalPrice = totalPrice;
             DiscountAmount = discountAmount;
             DiscountedPrice = discountedPrice;
-            Products = products;
-            Coupons = coupons;
         }
-        public Order()
+        public OrderContrib()
         {
-            Id = Guid.NewGuid();
+            Id = new Guid();
         }
 
+        [Key]
         public Guid Id { get; set; }
         public int Customer_Id { get; set; }
         public decimal TotalPrice { get; set; }
         public decimal DiscountAmount { get; set; }
         public decimal DiscountedPrice { get; set; }
-        public IList<Product> Products { get; set; } = new List<Product>();
-        public IList<Coupon> Coupons { get; set; } = new List<Coupon>();
-
-        
     }
 }

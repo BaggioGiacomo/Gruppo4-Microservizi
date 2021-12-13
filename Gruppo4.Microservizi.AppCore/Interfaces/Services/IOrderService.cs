@@ -13,5 +13,6 @@ namespace Gruppo4.Microservizi.AppCore.Interfaces.Services
         public Task UpdateOrder(Order order);
         public Task DeleteOrder(Guid id);
         public Task<Order> GetOrder(Guid id);
+        public Task<IEnumerable<Order>> GetOrders();
     }
 }
