@@ -20,10 +20,10 @@ namespace Gruppo4.Microservizi.AppCore.Models
         }
         public Order()
         {
-            Id = new Guid();
+            Id = Guid.NewGuid();
         }
 
-        public Guid Id { get; set; } = Guid.NewGuid();
+        public Guid Id { get; set; }
         public int Customer_Id { get; set; }
         public decimal TotalPrice { get; set; }
         public decimal DiscountAmount { get; set; }
