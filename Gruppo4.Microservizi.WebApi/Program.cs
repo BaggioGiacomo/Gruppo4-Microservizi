@@ -20,10 +20,10 @@ builder.Services.AddScoped<ICouponHasOrdersService, CouponHasOrdersService>();
 builder.Services.AddScoped<IOrdersHasProductService, OrdersHasProductService>();
 
 
-builder.Services.AddScoped<IProductRepository, ProductRepositoryContrib>();
 builder.Services.AddScoped<IOrderRepository, OrdersRepositoryContrib>();
 builder.Services.AddScoped<ICouponRepository, CouponsRepositoryContrib>();
-builder.Services.AddScoped<ICouponService, CouponService>();
+builder.Services.AddScoped<ICustomerRepository, CustomerRepositoryContrib>();
+builder.Services.AddScoped<IProductRepository, ProductRepositoryContrib>();
 builder.Services.AddScoped<ICouponHasOrdersRepository, CouponHasOrdersRepositoryContrib>();
 builder.Services.AddScoped<IOrdersHasProductRepository, OrdersHasProductRepositoryContrib>();
 
