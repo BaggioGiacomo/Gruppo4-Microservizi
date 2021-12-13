@@ -3,6 +3,7 @@ using Gruppo4.Microservizi.AppCore.Interfaces.Data;
 using Gruppo4.Microservizi.AppCore.Interfaces.Services;
 using Gruppo4.Microservizi.AppCore.Models.Entities;
 using Gruppo4.Microservizi.AppCore.Models.ModelContrib;
+using System.Text.Json;
 
 namespace Gruppo4.Microservizi.AppCore.Services
 {
@@ -160,19 +161,23 @@ namespace Gruppo4.Microservizi.AppCore.Services
         }
         private async Task CheckCoupons(Order order)
         {
-            var couponChecks = new List<Task<Coupon>>();
+            List<Coupon> invalidCoupons = new List<Coupon>();
             foreach (var coupon in order.Coupons)
             {
-                couponChecks.Add(_couponService.GetCoupon(coupon.Code));
+                Coupon temp = await _couponService.GetCoupon(coupon.Code);
+                if (temp == null)
+                {
+                    invalidCoupons.Add(new Coupon { Code = coupon.Code });
+
+                }
             }
 
-            var couponCheckResults = await Task.WhenAll(couponChecks);
-
-            if (!(couponCheckResults.All(c => c is not null)))
+            if (invalidCoupons.Any())
             {
-                // TODO: ritornare con l'eccezione la lista dei codici coupon non validi
-                throw new InvalidCouponException("Some coupons are invalid.");
+                var json = JsonSerializer.Serialize(invalidCoupons);
+                throw new InvalidCouponException(json);
             }
+
         }
         private async Task CheckCustomer(Order order)
         {
@@ -185,7 +190,7 @@ namespace Gruppo4.Microservizi.AppCore.Services
         private async Task Validate(Order order)
         {
             await CheckCoupons(order);
-            //await CheckCustomer(order);
+            await CheckCustomer(order);
             await CheckStock(order);
         }
         private async Task<decimal> CalculateTotal(Order order)
