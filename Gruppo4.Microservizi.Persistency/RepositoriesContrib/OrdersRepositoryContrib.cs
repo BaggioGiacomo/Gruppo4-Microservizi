@@ -1,4 +1,5 @@
-﻿using Dapper.Contrib.Extensions;
+﻿using Dapper;
+using Dapper.Contrib.Extensions;
 using Gruppo4.Microservizi.AppCore.Interfaces.Data;
 using Gruppo4.Microservizi.AppCore.Models;
 using Gruppo4.Microservizi.AppCore.Models.ModelContrib;
@@ -36,7 +37,7 @@ namespace Gruppo4.Microservizi.Persistency.Repositories.RepositoriesContrib
 
         }
 
-        public async Task<Order> GetOrder(Guid id)
+        public async Task<OrderContrib> GetOrder(Guid id)
         {
             OrderContrib order;
             using (var connection = new SqlConnection(_connectionString))
@@ -45,7 +46,7 @@ namespace Gruppo4.Microservizi.Persistency.Repositories.RepositoriesContrib
 
                 order = connection.Get<OrderContrib>(id);
             }
-            return null;
+            return order;
         }
 
         public Task<IEnumerable<Order>> GetOrders()
@@ -64,11 +65,24 @@ namespace Gruppo4.Microservizi.Persistency.Repositories.RepositoriesContrib
                 TotalPrice = order.TotalPrice,
             };
 
+            string query = @"
+INSERT INTO [dbo].[Orders]
+           ([Id]
+           ,[TotalPrice]
+           ,[DiscountedPrice]
+           ,[DiscountAmount]
+           ,[Customer_Id])
+     VALUES
+           (@Id,
+            @TotalPrice,
+            @DiscountedPrice,
+            @DiscountAmount,
+            @Customer_Id)";
+
+
             using (var connection = new SqlConnection(_connectionString))
             {
-                connection.Open();
-
-                var identity = connection.Insert(orderContrib);
+                connection.Execute(query,orderContrib);
             }
 
             return Task.CompletedTask;
@@ -78,5 +92,7 @@ namespace Gruppo4.Microservizi.Persistency.Repositories.RepositoriesContrib
         {
             throw new NotImplementedException();
         }
+
+
     }
 }
