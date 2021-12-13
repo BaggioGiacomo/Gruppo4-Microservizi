@@ -2,6 +2,7 @@
 using Gruppo4.Microservizi.AppCore.Interfaces.Data;
 using Gruppo4.Microservizi.AppCore.Interfaces.Services;
 using Gruppo4.Microservizi.AppCore.Models;
+using Gruppo4.Microservizi.AppCore.Models.ModelContrib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,27 +17,68 @@ namespace Gruppo4.Microservizi.AppCore.Services
         private readonly IProductService _productService;
         private readonly ICustomerService _customerService;
         private readonly ICouponService _couponService;
+        private readonly ICouponHasOrdersService _couponHasOrdersService;
+        private readonly IOrdersHasProductService _ordersHasProductService;
+
+
 
         public OrderService()
         {
 
         }
-        public OrderService(IOrderRepository orderRepository, IProductService productService, ICustomerService customerService, ICouponService couponService)
+
+        public OrderService(IOrderRepository orderRepository, IProductService productService, ICustomerService customerService, ICouponService couponService, ICouponHasOrdersService couponHasOrdersService, IOrdersHasProductService ordersHasProductService)
         {
             _orderRepository = orderRepository;
             _productService = productService;
             _customerService = customerService;
             _couponService = couponService;
+            _couponHasOrdersService = couponHasOrdersService;
+            _ordersHasProductService = ordersHasProductService;
         }
 
         public async Task DeleteOrder(Guid id)
         {
+
+            await _ordersHasProductService.DeleteOrderFromOrdersHasProduct(id);
+            await _couponHasOrdersService.DeleteCouponFromOrder(id);
             await _orderRepository.DeleteOrder(id);
         }
 
         public async Task<Order> GetOrder(Guid id)
         {
-            return await _orderRepository.GetOrder(id); 
+            Order order;
+            OrderContrib orderContrib = await _orderRepository.GetOrder(id);
+            order = new Order
+            {
+                Id = id,
+                Customer_Id = orderContrib.Customer_Id,
+                DiscountAmount = orderContrib.DiscountAmount,
+                TotalPrice = orderContrib.TotalPrice,
+                DiscountedPrice = orderContrib.DiscountedPrice,
+                //Controllare istanza liste
+                Coupons = new List<Coupon>(),
+                Products = new List<Product>()
+            };
+
+            var tempListProduct = await _ordersHasProductService.GetProductByOrderId(id);
+            foreach (var product in tempListProduct)
+            {
+                Product tempProduct = await _productService.GetProductById(product.Product_Id);
+                order.Products.Add(new Product { Id = product.Product_Id, Name = tempProduct.Name, Price = product.PriceAtTheMoment, Quantity = product.Quantity });
+            }
+
+            var tempListCoupon = await _couponHasOrdersService.GetCouponsHasOrder(id);
+            foreach (var coupon in tempListCoupon)
+            {
+                Coupon tempCoupon = await _couponService.GetCoupon(coupon.Coupon_Id);
+                order.Coupons.Add(new Coupon { Code = coupon.Coupon_Id, DiscountInfo = new DiscountInfo { DiscountAbsolute = tempCoupon.DiscountInfo.DiscountAbsolute, DiscountPercentage = tempCoupon.DiscountInfo.DiscountPercentage } });
+            }
+
+
+
+
+            return order;
         }
 
         public async Task<IEnumerable<Order>> GetOrders()
@@ -46,13 +88,29 @@ namespace Gruppo4.Microservizi.AppCore.Services
 
         public async Task InsertOrder(Order order)
         {
-            await CheckStock(order);
+
+            //Check stock of the products in the order
+            await Validate(order);
+            //Total Price
             order.TotalPrice = await CalculateTotal(order);
             var discount = await CalculateDiscount(order);
             order.DiscountAmount = (order.TotalPrice - discount.DiscountAbsolute) * (1 - discount.DiscountPercentage / 100);
             order.DiscountedPrice = order.TotalPrice - order.DiscountAmount;
+
             await _orderRepository.InsertOrder(order);
-        }       
+            foreach (var coupon in order.Coupons)
+            {
+                await _couponHasOrdersService.InsertCouponHasOrder(new CouponHasOrdersContrib { Orders_Id = order.Id, Coupon_Id = coupon.Code });
+            }
+            foreach (var product in order.Products)
+            {
+                var tempProduct = await _productService.GetProductById(product.Id);
+                await _ordersHasProductService.InsertProductHasOrder(new OrdersHasProductContrib { Orders_Id = order.Id, Product_Id = product.Id, PriceAtTheMoment = tempProduct.Price, Quantity = product.Quantity });
+            }
+
+
+
+        }
 
         public async Task UpdateOrder(Order order)
         {
@@ -86,7 +144,7 @@ namespace Gruppo4.Microservizi.AppCore.Services
 
             var couponCheckResults = await Task.WhenAll(couponChecks);
 
-            if(!(couponCheckResults.All(c => c is not null)))
+            if (!(couponCheckResults.All(c => c is not null)))
             {
                 // TODO: ritornare con l'eccezione la lista dei codici coupon non validi
                 throw new InvalidCouponException("Some coupons are invalid.");
@@ -95,7 +153,7 @@ namespace Gruppo4.Microservizi.AppCore.Services
         private async Task CheckCustomer(Order order)
         {
             var customer = await _customerService.GetCustomerById(order.Customer_Id);
-            if(customer is null)
+            if (customer is null)
             {
                 throw new InvalidCustomerIdException($"Customer {order.Customer_Id} does not exist.");
             }
@@ -110,10 +168,10 @@ namespace Gruppo4.Microservizi.AppCore.Services
         {
             decimal total = 0;
             foreach (var product in order.Products)
-	        {
+            {
                 var productInfo = await _productService.GetProductById(product.Id);
-                total += productInfo.Price;
-	        }
+                total += productInfo.Price * product.Quantity;
+            }
             return total;
         }
         private async Task<DiscountInfo> CalculateDiscount(Order order)
