@@ -1,7 +1,6 @@
 using Gruppo4.Microservizi.AppCore.Interfaces.Data;
 using Gruppo4.Microservizi.AppCore.Interfaces.Services;
 using Gruppo4.Microservizi.AppCore.Services;
-using Gruppo4.Microservizi.Persistency.Repositories;
 using Gruppo4.Microservizi.Persistency.Repositories.RepositoriesContrib;
 using Gruppo4.Microservizi.Persistency.RepositoriesContrib;
 

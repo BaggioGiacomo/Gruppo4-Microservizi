@@ -1,9 +1,4 @@
-﻿    using Dapper.Contrib.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Dapper.Contrib.Extensions;
 
 namespace Gruppo4.Microservizi.AppCore.Models.ModelContrib
 {
@@ -13,7 +8,7 @@ namespace Gruppo4.Microservizi.AppCore.Models.ModelContrib
 
         public CouponHasOrdersContrib()
         {
-            
+
         }
 
         [ExplicitKey]

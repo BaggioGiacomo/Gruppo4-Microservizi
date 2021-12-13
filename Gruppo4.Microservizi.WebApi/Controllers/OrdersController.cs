@@ -1,12 +1,10 @@
 ﻿using Gruppo4.Microservizi.AppCore.Exceptions;
 using Gruppo4.Microservizi.AppCore.Interfaces.Services;
-using Gruppo4.Microservizi.AppCore.Models;
-using Gruppo4MicroserviziDTO.DTOs;
-using MassTransit;
-using Microsoft.AspNetCore.Mvc;
-using Gruppo4.Microservizi.WebApi.DTOs;
-using Gruppo4.Microservizi.AppCore.Models.ModelContrib;
 using Gruppo4.Microservizi.AppCore.Models.Entities;
+using Gruppo4.Microservizi.AppCore.Models.ModelContrib;
+using Gruppo4.Microservizi.WebApi.DTOs;
+using Gruppo4MicroserviziDTO.DTOs;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Gruppo4.Microservizi.WebApi.Controllers
 {

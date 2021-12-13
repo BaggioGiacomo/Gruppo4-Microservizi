@@ -1,12 +1,7 @@
-﻿using MassTransit;
-using MacNuget.Warehouse.Events;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Gruppo4.Microservizi.AppCore.Interfaces.Services;
+﻿using Gruppo4.Microservizi.AppCore.Interfaces.Services;
 using Gruppo4.Microservizi.AppCore.Models.ModelContrib;
+using MacNuget.Warehouse.Events;
+using MassTransit;
 
 namespace Gruppo4.Microservizi.AppCore.Consumers.Warehouse
 {

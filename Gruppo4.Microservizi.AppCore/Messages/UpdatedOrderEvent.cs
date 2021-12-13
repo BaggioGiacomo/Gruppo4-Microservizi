@@ -1,9 +1,4 @@
 ﻿using Gruppo4MicroserviziDTO.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Gruppo4MicroserviziDTO.DTOs
 {
@@ -16,5 +11,5 @@ namespace Gruppo4MicroserviziDTO.DTOs
         public decimal DiscountedPrice { get; set; }
 
         public IEnumerable<ProductInOrder> Products { get; set; }
-    }    
+    }
 }

@@ -1,12 +1,6 @@
 ﻿using Gruppo4.Microservizi.AppCore.Interfaces.Data;
 using Gruppo4.Microservizi.AppCore.Interfaces.Services;
-using Gruppo4.Microservizi.AppCore.Models;
 using Gruppo4.Microservizi.AppCore.Models.ModelContrib;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Gruppo4.Microservizi.AppCore.Services
 {
@@ -26,17 +20,17 @@ namespace Gruppo4.Microservizi.AppCore.Services
 
         public async Task DeleteOrderFromOrdersHasProduct(Guid idOrders)
         {
-            await _ordersHasProductService.DeleteOrderFromOrdersHasProduct(idOrders);   
+            await _ordersHasProductService.DeleteOrderFromOrdersHasProduct(idOrders);
         }
 
         public async Task DeleteProductFromOrdersHasProduct(Guid idOrders, int idProduct)
         {
-            await _ordersHasProductService.DeleteProductFromOrdersHasProduct(idOrders, idProduct);  
+            await _ordersHasProductService.DeleteProductFromOrdersHasProduct(idOrders, idProduct);
         }
 
         public async Task<IEnumerable<OrdersHasProductContrib>> GetProductByOrderId(Guid idOrders)
         {
-           return await _ordersHasProductService.GetProductByOrderId(idOrders); 
+            return await _ordersHasProductService.GetProductByOrderId(idOrders);
         }
 
         public async Task InsertProductHasOrder(OrdersHasProductContrib ordersHasProduct)
@@ -46,7 +40,7 @@ namespace Gruppo4.Microservizi.AppCore.Services
 
         public async Task UpdateProductHasOrder(OrdersHasProductContrib ordersHasProduct)
         {
-            await _ordersHasProductService.UpdateProductHasOrder(ordersHasProduct); 
+            await _ordersHasProductService.UpdateProductHasOrder(ordersHasProduct);
         }
     }
 }
