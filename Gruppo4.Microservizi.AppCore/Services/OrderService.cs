@@ -76,15 +76,47 @@ namespace Gruppo4.Microservizi.AppCore.Services
                 order.Coupons.Add(new Coupon { Code = coupon.Coupon_Id, DiscountInfo = new DiscountInfo { DiscountAbsolute = tempCoupon.DiscountInfo.DiscountAbsolute, DiscountPercentage = tempCoupon.DiscountInfo.DiscountPercentage } });
             }
 
-
-
-
             return order;
         }
 
         public async Task<IEnumerable<Order>> GetOrders()
         {
-            return await _orderRepository.GetOrders();
+            var ordersToReturn = new List<Order>();
+
+            var orders = await _orderRepository.GetOrders();
+
+            foreach (var order in orders)
+            {
+                Order orderTemp;
+                OrderContrib orderContrib = await _orderRepository.GetOrder(order.Id);
+                orderTemp = new Order
+                {
+                    Id = order.Id,
+                    Customer_Id = orderContrib.Customer_Id,
+                    DiscountAmount = orderContrib.DiscountAmount,
+                    TotalPrice = orderContrib.TotalPrice,
+                    DiscountedPrice = orderContrib.DiscountedPrice,
+                    //Controllare istanza liste
+                    Coupons = new List<Coupon>(),
+                    Products = new List<ProductContrib>()
+                };
+
+                var tempListProduct = await _ordersHasProductService.GetProductByOrderId(order.Id);
+                foreach (var product in tempListProduct)
+                {
+                    ProductContrib tempProduct = await _productService.GetProductById(product.Product_Id);
+                    orderTemp.Products.Add(new ProductContrib { Id = product.Product_Id, Name = tempProduct.Name, Price = product.PriceAtTheMoment, Quantity = product.Quantity });
+                }
+
+                var tempListCoupon = await _couponHasOrdersService.GetCouponsHasOrder(order.Id);
+                foreach (var coupon in tempListCoupon)
+                {
+                    Coupon tempCoupon = await _couponService.GetCoupon(coupon.Coupon_Id);
+                    orderTemp.Coupons.Add(new Coupon { Code = coupon.Coupon_Id, DiscountInfo = new DiscountInfo { DiscountAbsolute = tempCoupon.DiscountInfo.DiscountAbsolute, DiscountPercentage = tempCoupon.DiscountInfo.DiscountPercentage } });
+                }
+                ordersToReturn.Add(orderTemp);
+            }
+            return ordersToReturn;
         }
 
         public async Task InsertOrder(Order order)
@@ -108,9 +140,6 @@ namespace Gruppo4.Microservizi.AppCore.Services
                 var tempProduct = await _productService.GetProductById(product.Id);
                 await _ordersHasProductService.InsertProductHasOrder(new OrdersHasProductContrib { Orders_Id = order.Id, Product_Id = product.Id, PriceAtTheMoment = tempProduct.Price, Quantity = product.Quantity });
             }
-
-
-
         }
 
         public async Task UpdateOrder(Order order)
