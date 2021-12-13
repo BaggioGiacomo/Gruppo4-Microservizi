@@ -1,6 +1,7 @@
 ﻿using Dapper.Contrib.Extensions;
 using Gruppo4.Microservizi.AppCore.Interfaces.Data;
 using Gruppo4.Microservizi.AppCore.Models;
+using Gruppo4.Microservizi.AppCore.Models.ModelContrib;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -40,7 +41,7 @@ namespace Gruppo4.Microservizi.Persistency.RepositoriesContrib
         {
             //Parameter id=productId, quantity=quantity request
             //Check quantity stock product 
-            Product product = GetProductById(id).Result;
+            ProductContrib product = GetProductById(id).Result;
             if (product != null && product.Quantity > quantity)
             {
                 return true;
@@ -57,12 +58,12 @@ namespace Gruppo4.Microservizi.Persistency.RepositoriesContrib
             {
                 connection.Open();
 
-                var isSuccess = connection.Delete(new Product { Id = id });
+                var isSuccess = connection.Delete(new ProductContrib { Id = id });
             }
             return Task.CompletedTask;
         }
 
-        public Task InsertProduct(Product product)
+        public Task InsertProduct(ProductContrib product)
         {
             using (var connection = new SqlConnection(_connectionString))
             {
@@ -73,7 +74,7 @@ namespace Gruppo4.Microservizi.Persistency.RepositoriesContrib
             return Task.CompletedTask;
         }
 
-        public Task UpdateProduct(Product product)
+        public Task UpdateProduct(ProductContrib product)
         {
             using (var connection = new SqlConnection(_connectionString))
             {
@@ -84,14 +85,14 @@ namespace Gruppo4.Microservizi.Persistency.RepositoriesContrib
             return Task.CompletedTask;
         }
 
-        public async Task<Product> GetProductById(int id)
+        public async Task<ProductContrib> GetProductById(int id)
         {
-            Product product;
+            ProductContrib product;
             using (var connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
 
-                product = connection.Get<Product>(id);
+                product = connection.Get<ProductContrib>(id);
             }
 
             return product;

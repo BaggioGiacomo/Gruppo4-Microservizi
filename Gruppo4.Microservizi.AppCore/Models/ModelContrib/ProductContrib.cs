@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Gruppo4.Microservizi.AppCore.Models
+namespace Gruppo4.Microservizi.AppCore.Models.ModelContrib
 {
     [Table("Product")]
-    public class Product
+    public class ProductContrib
     {
         [Key]
         public int Id { get; set; }

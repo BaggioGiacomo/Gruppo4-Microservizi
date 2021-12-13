@@ -1,6 +1,7 @@
 ﻿using Gruppo4.Microservizi.AppCore.Interfaces.Data;
 using Gruppo4.Microservizi.AppCore.Interfaces.Services;
 using Gruppo4.Microservizi.AppCore.Models;
+using Gruppo4.Microservizi.AppCore.Models.ModelContrib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace Gruppo4.Microservizi.AppCore.Services
         {
 
         }
-            
+
         public CustomerService(ICustomerRepository customerRepository)
         {
             _customerRepository = customerRepository;
@@ -28,19 +29,24 @@ namespace Gruppo4.Microservizi.AppCore.Services
             await _customerRepository.DeleteCustomer(id);
         }
 
-        public async Task<Customer> GetCustomerById(int id)
+        public async Task<CustomerContrib> GetCustomerById(int id)
         {
             return await _customerRepository.GetCustomerById(id);
         }
 
-        public async Task InsertCustomer(Customer customer)
+        public async Task InsertCustomer(CustomerContrib customer)
         {
             await _customerRepository.InsertCustomer(customer);
         }
 
-        public async Task UpdateCustomer(Customer customer)
+        public Task UpdateCustomer(CustomerContrib customer)
         {
-            await _customerRepository.UpdateCustomer(customer);
+            throw new NotImplementedException();
+        }
+
+        Task<CustomerContrib> ICustomerService.GetCustomerById(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

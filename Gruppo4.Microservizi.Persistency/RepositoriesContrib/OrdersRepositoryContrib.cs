@@ -2,6 +2,7 @@
 using Dapper.Contrib.Extensions;
 using Gruppo4.Microservizi.AppCore.Interfaces.Data;
 using Gruppo4.Microservizi.AppCore.Models;
+using Gruppo4.Microservizi.AppCore.Models.Entities;
 using Gruppo4.Microservizi.AppCore.Models.ModelContrib;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;

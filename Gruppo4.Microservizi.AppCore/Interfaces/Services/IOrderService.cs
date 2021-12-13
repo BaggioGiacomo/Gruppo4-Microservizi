@@ -1,4 +1,5 @@
 ﻿using Gruppo4.Microservizi.AppCore.Models;
+using Gruppo4.Microservizi.AppCore.Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,6 +1,7 @@
 ﻿using Gruppo3.ClientiDTO.Domain.Events;
 using Gruppo4.Microservizi.AppCore.Interfaces.Services;
 using Gruppo4.Microservizi.AppCore.Models;
+using Gruppo4.Microservizi.AppCore.Models.ModelContrib;
 using MassTransit;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ namespace Gruppo4.Microservizi.AppCore.Consumers.Customers
 
         public async Task Consume(ConsumeContext<CreateClientEvent> context)
         {
-            await _consumerService.InsertCustomer(new Customer
+            await _consumerService.InsertCustomer(new CustomerContrib
             {
                 Id = context.Message.Id,
                 Name = context.Message.Name,

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Gruppo4.Microservizi.AppCore.Models
+namespace Gruppo4.Microservizi.AppCore.Models.ModelContrib
 {
-    public class Customer
+    public class CustomerContrib
     {
         public int Id { get; set; }
         public string Name { get; set; }

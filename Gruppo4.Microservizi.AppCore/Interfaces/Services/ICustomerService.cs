@@ -1,4 +1,5 @@
 ﻿using Gruppo4.Microservizi.AppCore.Models;
+using Gruppo4.Microservizi.AppCore.Models.ModelContrib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,9 @@ namespace Gruppo4.Microservizi.AppCore.Interfaces.Services
 {
     public interface ICustomerService
     {
-        public Task InsertCustomer(Customer customer);
-        public Task UpdateCustomer(Customer customer);
-        public Task<Customer> GetCustomerById(int id);
+        public Task InsertCustomer(CustomerContrib customer);
+        public Task UpdateCustomer(CustomerContrib customer);
+        public Task<CustomerContrib> GetCustomerById(int id);
         public Task DeleteCustomer(int id);
 
     }

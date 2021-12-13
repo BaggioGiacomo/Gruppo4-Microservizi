@@ -1,9 +1,5 @@
-﻿using Gruppo4.Microservizi.AppCore.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Gruppo4.Microservizi.AppCore.Models.Entities;
+
 
 namespace Gruppo4.Microservizi.AppCore.Interfaces.Data
 {

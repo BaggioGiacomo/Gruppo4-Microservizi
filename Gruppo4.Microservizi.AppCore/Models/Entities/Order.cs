@@ -1,14 +1,15 @@
-﻿using System;
+﻿using Gruppo4.Microservizi.AppCore.Models.ModelContrib;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Gruppo4.Microservizi.AppCore.Models
+namespace Gruppo4.Microservizi.AppCore.Models.Entities
 {
     public class Order
     {
-        public Order(string id, int customerId, decimal totalPrice, decimal discountAmount, decimal discountedPrice, IList<Product> products, IList<Coupon> coupons)
+        public Order(string id, int customerId, decimal totalPrice, decimal discountAmount, decimal discountedPrice, IList<ProductContrib> products, IList<Coupon> coupons)
         {
             Id = Guid.Parse(id);
             Customer_Id = customerId;
@@ -28,9 +29,9 @@ namespace Gruppo4.Microservizi.AppCore.Models
         public decimal TotalPrice { get; set; }
         public decimal DiscountAmount { get; set; }
         public decimal DiscountedPrice { get; set; }
-        public IList<Product> Products { get; set; } = new List<Product>();
+        public IList<ProductContrib> Products { get; set; } = new List<ProductContrib>();
         public IList<Coupon> Coupons { get; set; } = new List<Coupon>();
 
-        
+
     }
 }

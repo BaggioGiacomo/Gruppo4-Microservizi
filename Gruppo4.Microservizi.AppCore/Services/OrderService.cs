@@ -2,6 +2,7 @@
 using Gruppo4.Microservizi.AppCore.Interfaces.Data;
 using Gruppo4.Microservizi.AppCore.Interfaces.Services;
 using Gruppo4.Microservizi.AppCore.Models;
+using Gruppo4.Microservizi.AppCore.Models.Entities;
 using Gruppo4.Microservizi.AppCore.Models.ModelContrib;
 using System;
 using System.Collections.Generic;
@@ -58,14 +59,14 @@ namespace Gruppo4.Microservizi.AppCore.Services
                 DiscountedPrice = orderContrib.DiscountedPrice,
                 //Controllare istanza liste
                 Coupons = new List<Coupon>(),
-                Products = new List<Product>()
+                Products = new List<ProductContrib>()
             };
 
             var tempListProduct = await _ordersHasProductService.GetProductByOrderId(id);
             foreach (var product in tempListProduct)
             {
-                Product tempProduct = await _productService.GetProductById(product.Product_Id);
-                order.Products.Add(new Product { Id = product.Product_Id, Name = tempProduct.Name, Price = product.PriceAtTheMoment, Quantity = product.Quantity });
+                ProductContrib tempProduct = await _productService.GetProductById(product.Product_Id);
+                order.Products.Add(new ProductContrib { Id = product.Product_Id, Name = tempProduct.Name, Price = product.PriceAtTheMoment, Quantity = product.Quantity });
             }
 
             var tempListCoupon = await _couponHasOrdersService.GetCouponsHasOrder(id);

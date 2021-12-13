@@ -1,5 +1,6 @@
 ﻿using Gruppo4.Microservizi.AppCore.Interfaces.Services;
 using Gruppo4.Microservizi.AppCore.Models;
+using Gruppo4.Microservizi.AppCore.Models.ModelContrib;
 using MassTransit;
 using Microservices.Ecommerce.DTO.Events;
 using System;
@@ -21,7 +22,7 @@ namespace Gruppo4.Microservizi.AppCore.Consumers.Products
 
         public async Task Consume(ConsumeContext<UpdateProductEvent> context)
         {
-            await _productService.UpdateProduct(new Product
+            await _productService.UpdateProduct(new ProductContrib
             {
                 Id = context.Message.Id,
                 Name = context.Message.Nome,

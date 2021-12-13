@@ -1,6 +1,7 @@
 ﻿using Gruppo4.Microservizi.AppCore.Interfaces.Data;
 using Gruppo4.Microservizi.AppCore.Interfaces.Services;
 using Gruppo4.Microservizi.AppCore.Models;
+using Gruppo4.Microservizi.AppCore.Models.ModelContrib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +27,7 @@ namespace Gruppo4.Microservizi.AppCore.Services
             await _productRepository.DeleteProduct(id);
         }
 
-        public async Task<Product> GetProductById(int id)
+        public async Task<ProductContrib> GetProductById(int id)
         {
             return await _productRepository.GetProductById(id);
         }
@@ -41,7 +42,7 @@ namespace Gruppo4.Microservizi.AppCore.Services
             return await _productRepository.HasEnoughStocked(id, quantity);
         }
 
-        public async Task InsertProduct(Product product)
+        public async Task InsertProduct(ProductContrib product)
         {
             await _productRepository.InsertProduct(product);
         }
@@ -51,7 +52,7 @@ namespace Gruppo4.Microservizi.AppCore.Services
             await _productRepository.RefillQuantity(id, quantity);
         }
 
-        public async Task UpdateProduct(Product product)
+        public async Task UpdateProduct(ProductContrib product)
         {
             await _productRepository.UpdateProduct(product);
         }

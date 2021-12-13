@@ -5,6 +5,8 @@ using Gruppo4MicroserviziDTO.DTOs;
 using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 using Gruppo4.Microservizi.WebApi.DTOs;
+using Gruppo4.Microservizi.AppCore.Models.ModelContrib;
+using Gruppo4.Microservizi.AppCore.Models.Entities;
 
 namespace Gruppo4.Microservizi.WebApi.Controllers
 {
@@ -17,7 +19,7 @@ namespace Gruppo4.Microservizi.WebApi.Controllers
 
         public OrdersController(IOrderService orderService/*, IPublishEndpoint endpoint*/)
         {
-            _orderService = orderService;      
+            _orderService = orderService;
             //_endpoint = endpoint;
         }
 
@@ -26,7 +28,7 @@ namespace Gruppo4.Microservizi.WebApi.Controllers
         public async Task<IActionResult> GetOrderAsync(Guid guid)
         {
             var order = await _orderService.GetOrder(guid);
-            if(order is null)
+            if (order is null)
             {
                 return NotFound();
             }
@@ -39,7 +41,7 @@ namespace Gruppo4.Microservizi.WebApi.Controllers
         public async Task<IActionResult> GetOrders()
         {
             var orders = await _orderService.GetOrders();
-            return Ok(orders); 
+            return Ok(orders);
         }
 
 
@@ -50,13 +52,13 @@ namespace Gruppo4.Microservizi.WebApi.Controllers
             var newOrder = new Order
             {
                 Customer_Id = order.CustomerId,
-                Products = new List<Product>(),
+                Products = new List<ProductContrib>(),
                 Coupons = new List<Coupon>()
             };
 
             foreach (var product in order.Products)
             {
-                newOrder.Products.Add(new Product
+                newOrder.Products.Add(new ProductContrib
                 {
                     Id = product.ProductId,
                     Quantity = product.OrderedQuantity
@@ -82,7 +84,7 @@ namespace Gruppo4.Microservizi.WebApi.Controllers
             {
                 return BadRequest(e.Message);
             }
-            catch(NotEnoughStockException e)
+            catch (NotEnoughStockException e)
             {
                 return BadRequest(e.Message);
             }
@@ -96,7 +98,7 @@ namespace Gruppo4.Microservizi.WebApi.Controllers
                 IdCliente = createdOrder.Customer_Id,
                 TotalPrice = createdOrder.TotalPrice,
                 DiscountAmount = createdOrder.DiscountAmount,
-                DiscountedPrice = createdOrder.DiscountedPrice                
+                DiscountedPrice = createdOrder.DiscountedPrice
             };
 
             foreach (var product in createdOrder.Products)
