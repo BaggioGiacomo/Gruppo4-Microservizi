@@ -38,6 +38,8 @@ namespace Gruppo4.Microservizi.Persistency.RepositoriesContrib
 
         public async Task<bool> HasEnoughStocked(int id, int quantity)
         {
+            //Parameter id=productId, quantity=quantity request
+            //Check quantity stock product 
             Product product = GetProductById(id).Result;
             if(product != null && product.Quantity >  quantity)
             {
