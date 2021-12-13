@@ -18,11 +18,6 @@ namespace Gruppo4.Microservizi.Persistency.RepositoriesContrib
         public IConfiguration _configuration;
         public readonly string _connectionString;
 
-        public CouponHasOrdersRepositoryContrib()
-        {
-
-        }
-
         public CouponHasOrdersRepositoryContrib(IConfiguration configuration)
         {
             _configuration = configuration;

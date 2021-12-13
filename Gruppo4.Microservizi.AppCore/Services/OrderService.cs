@@ -161,7 +161,7 @@ namespace Gruppo4.Microservizi.AppCore.Services
         private async Task Validate(Order order)
         {
             await CheckCoupons(order);
-            await CheckCustomer(order);
+            //await CheckCustomer(order);
             await CheckStock(order);
         }
         private async Task<decimal> CalculateTotal(Order order)
