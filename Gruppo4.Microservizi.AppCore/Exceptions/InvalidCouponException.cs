@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using Gruppo4.Microservizi.AppCore.Models.Entities;
+using System.Runtime.Serialization;
 
 namespace Gruppo4.Microservizi.AppCore.Exceptions
 {

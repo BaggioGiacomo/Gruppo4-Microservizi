@@ -33,14 +33,10 @@ namespace Gruppo4.Microservizi.AppCore.Services
             await _customerRepository.InsertCustomer(customer);
         }
 
-        public Task UpdateCustomer(CustomerContrib customer)
+        public async Task UpdateCustomer(CustomerContrib customer)
         {
-            throw new NotImplementedException();
+            _customerRepository.UpdateCustomer(customer);
         }
 
-        Task<CustomerContrib> ICustomerService.GetCustomerById(int id)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

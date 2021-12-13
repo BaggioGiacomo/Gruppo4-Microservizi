@@ -2,7 +2,7 @@
 
 namespace Gruppo4.Microservizi.AppCore.Models.ModelContrib
 {
-    [Table("Customers")]
+    [Table("Customer")]
     public class CustomerContrib
     {
         [Key]
