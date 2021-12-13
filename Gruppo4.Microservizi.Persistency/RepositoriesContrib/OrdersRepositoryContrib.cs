@@ -16,11 +16,11 @@ namespace Gruppo4.Microservizi.Persistency.Repositories.RepositoriesContrib
     public class OrdersRepositoryContrib : IOrderRepository
     {
         public IConfiguration _configuration;
-        public readonly string _connectionString = "Server=tcp:its-clod-zanotto.database.windows.net,1433;Initial Catalog=its-clod-zanotto;Persist Security Info=False;User ID=andrea;Password=Vmware1!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+        public readonly string _connectionString;
         public OrdersRepositoryContrib(IConfiguration configuration)
         {
             _configuration = configuration;
-            //_connectionString=_configuration.GetConnectionString("Db");
+            _connectionString = configuration.GetConnectionString("AzureDbConnection");
         }
 
 
@@ -82,7 +82,7 @@ INSERT INTO [dbo].[Orders]
 
             using (var connection = new SqlConnection(_connectionString))
             {
-                connection.Execute(query,orderContrib);
+                connection.Execute(query, orderContrib);
             }
 
             return Task.CompletedTask;

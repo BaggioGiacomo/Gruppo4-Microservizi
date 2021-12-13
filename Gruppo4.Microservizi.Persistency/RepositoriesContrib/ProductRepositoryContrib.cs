@@ -14,11 +14,11 @@ namespace Gruppo4.Microservizi.Persistency.RepositoriesContrib
     public class ProductRepositoryContrib : IProductRepository
     {
         public IConfiguration _configuration;
-        public readonly string _connectionString = "Server=tcp:its-clod-zanotto.database.windows.net,1433;Initial Catalog=its-clod-zanotto;Persist Security Info=False;User ID=andrea;Password=Vmware1!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+        public readonly string _connectionString;
         public ProductRepositoryContrib(IConfiguration configuration)
         {
             _configuration = configuration;
-            //_connectionString=_configuration.GetConnectionString("Db");
+            _connectionString = configuration.GetConnectionString("AzureDbConnection");
         }
 
         public async Task RefillQuantity(int id, int quantity)
@@ -41,7 +41,7 @@ namespace Gruppo4.Microservizi.Persistency.RepositoriesContrib
             //Parameter id=productId, quantity=quantity request
             //Check quantity stock product 
             Product product = GetProductById(id).Result;
-            if(product != null && product.Quantity >  quantity)
+            if (product != null && product.Quantity > quantity)
             {
                 return true;
             }
@@ -86,7 +86,7 @@ namespace Gruppo4.Microservizi.Persistency.RepositoriesContrib
 
         public async Task<Product> GetProductById(int id)
         {
-            Product product; 
+            Product product;
             using (var connection = new SqlConnection(_connectionString))
             {
                 connection.Open();

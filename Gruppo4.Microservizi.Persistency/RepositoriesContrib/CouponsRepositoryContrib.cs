@@ -12,14 +12,14 @@ using System.Threading.Tasks;
 
 namespace Gruppo4.Microservizi.Persistency.RepositoriesContrib
 {
-    public class CouponsRepositoryContrib: ICouponRepository
+    public class CouponsRepositoryContrib : ICouponRepository
     {
         public IConfiguration _configuration;
-        public readonly string _connectionString = "Server=tcp:its-clod-zanotto.database.windows.net,1433;Initial Catalog=its-clod-zanotto;Persist Security Info=False;User ID=andrea;Password=Vmware1!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+        public readonly string _connectionString;
         public CouponsRepositoryContrib(IConfiguration configuration)
         {
             _configuration = configuration;
-            //_connectionString=_configuration.GetConnectionString("Db");
+            _connectionString = configuration.GetConnectionString("AzureDbConnection");
         }
 
         public async Task<Coupon> GetCoupon(string code)
