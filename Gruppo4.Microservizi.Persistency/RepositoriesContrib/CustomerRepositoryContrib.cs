@@ -6,11 +6,11 @@ using Microsoft.Extensions.Configuration;
 
 namespace Gruppo4.Microservizi.Persistency.RepositoriesContrib
 {
-    public class CustomerRepository : ICustomerRepository
+    public class CustomerRepositoryContrib : ICustomerRepository
     {
         public IConfiguration _configuration;
         public readonly string _connectionString;
-        public CustomerRepository(IConfiguration configuration)
+        public CustomerRepositoryContrib(IConfiguration configuration)
         {
             _configuration = configuration;
             _connectionString = configuration.GetConnectionString("AzureDbConnection");
