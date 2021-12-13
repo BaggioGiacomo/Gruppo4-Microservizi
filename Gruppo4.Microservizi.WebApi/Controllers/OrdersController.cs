@@ -86,7 +86,8 @@ namespace Gruppo4.Microservizi.WebApi.Controllers
             }
             catch (NotEnoughStockException e)
             {
-                return BadRequest(e.Message);
+                // Todo: controllare json di ritorno prodotti mancanti
+                return BadRequest(new { MissingProducts = e.Message });
             }
             catch { throw; }
 

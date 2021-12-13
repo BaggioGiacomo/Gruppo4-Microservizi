@@ -145,19 +145,21 @@ namespace Gruppo4.Microservizi.AppCore.Services
 
         private async Task CheckStock(Order order)
         {
-            var stockChecks = new List<Task<bool>>();
+            List<ProductContrib> productsNotInStock = new List<ProductContrib>();
             foreach (var product in order.Products)
             {
-                stockChecks.Add(_productService.HasEnoughStocked(product.Id, product.Quantity));
+                if (!_productService.HasEnoughStocked(product.Id, product.Quantity).Result)
+                {
+                    productsNotInStock.Add(product);
+                }
             }
 
-            var stockChecksResults = await Task.WhenAll(stockChecks);
-
-            if (!(stockChecksResults.All(v => v)))
+            if (productsNotInStock.Any())
             {
-                // TODO: ritornare con l'eccezione la lista dei prodotti che non sono in stock
-                throw new NotEnoughStockException("Some products are missing.");
+                var json = JsonSerializer.Serialize(productsNotInStock);
+                throw new NotEnoughStockException(json);
             }
+
         }
         private async Task CheckCoupons(Order order)
         {
