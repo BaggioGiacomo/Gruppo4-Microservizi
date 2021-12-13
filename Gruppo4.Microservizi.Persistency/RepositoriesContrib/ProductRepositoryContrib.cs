@@ -92,10 +92,8 @@ namespace Gruppo4.Microservizi.Persistency.RepositoriesContrib
             {
                 connection.Open();
 
-                product = connection.Get<ProductContrib>(id);
+                return connection.Get<ProductContrib>(id);
             }
-
-            return product;
         }
     }
 }

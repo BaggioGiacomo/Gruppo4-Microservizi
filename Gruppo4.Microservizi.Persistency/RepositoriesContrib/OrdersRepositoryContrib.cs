@@ -50,9 +50,14 @@ namespace Gruppo4.Microservizi.Persistency.Repositories.RepositoriesContrib
             return order;
         }
 
-        public Task<IEnumerable<Order>> GetOrders()
+        public async Task<IEnumerable<OrderContrib>> GetOrders()
         {
-            throw new NotImplementedException();
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                return connection.GetAll<OrderContrib>().ToList();
+            }
         }
 
         public Task InsertOrder(Order order)
