@@ -4,6 +4,7 @@ using Gruppo4.Microservizi.AppCore.Models.Entities;
 using Gruppo4.Microservizi.AppCore.Models.ModelContrib;
 using Gruppo4.Microservizi.WebApi.DTOs;
 using Gruppo4MicroserviziDTO.DTOs;
+using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using System.Text.Json;
@@ -15,12 +16,12 @@ namespace Gruppo4.Microservizi.WebApi.Controllers
     public class OrdersController : ControllerBase
     {
         private readonly IOrderService _orderService;
-        //private readonly IPublishEndpoint _endpoint;
+        private readonly IPublishEndpoint _endpoint;
 
-        public OrdersController(IOrderService orderService/*, IPublishEndpoint endpoint*/)
+        public OrdersController(IOrderService orderService, IPublishEndpoint endpoint)
         {
             _orderService = orderService;
-            //_endpoint = endpoint;
+            _endpoint = endpoint;
         }
 
         [HttpGet]
@@ -115,7 +116,7 @@ namespace Gruppo4.Microservizi.WebApi.Controllers
                 });
             }
 
-            //await _endpoint.Publish(newOrderEvent);
+            await _endpoint.Publish(newOrderEvent);
 
             return CreatedAtAction(nameof(GetOrderAsync), createdOrder);
         }
@@ -124,7 +125,17 @@ namespace Gruppo4.Microservizi.WebApi.Controllers
         [Route("{id}")]
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
-            /*var order = await _orderService.GetOrder(id);
+            try
+            {
+                await _orderService.DeleteOrder(id);
+
+            }
+            catch (Exception)
+            {
+                //TODO: Aggiungere eccezione errore eliminazione ordine
+                throw;
+            }
+            var order = await _orderService.GetOrder(id);
             var deletedOrderEvent = new DeletedOrderEvent
             {
                 Id = id
@@ -134,14 +145,12 @@ namespace Gruppo4.Microservizi.WebApi.Controllers
             {
                 deletedOrderEvent.Products.Add(new Gruppo4MicroserviziDTO.Models.ProductInOrder
                 {
-                    ProductId=product.Id,
-                    OrderedQuantity=product.Quantity
+                    ProductId = product.Id,
+                    OrderedQuantity = product.Quantity
                 });
             }
 
             await _endpoint.Publish(deletedOrderEvent);
-            */
-            await _orderService.DeleteOrder(id);
             return Ok();
         }
     }
