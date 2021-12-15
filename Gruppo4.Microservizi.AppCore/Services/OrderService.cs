@@ -142,10 +142,18 @@ namespace Gruppo4.Microservizi.AppCore.Services
             List<ProductContrib> productsNotInStock = new List<ProductContrib>();
             foreach (var product in order.Products)
             {
-                if (!(await _productService.HasEnoughStocked(product.Id, product.Quantity)))
+                if (product.Quantity > 0)
                 {
-                    productsNotInStock.Add(product);
+                    if (!(await _productService.HasEnoughStocked(product.Id, product.Quantity)))
+                    {
+                        productsNotInStock.Add(product);
+                    }
                 }
+                else
+                {
+                    throw new NegativeProductQuantityExeception("Negative product quantity inserted", product);
+                }
+
             }
 
             if (productsNotInStock.Any())

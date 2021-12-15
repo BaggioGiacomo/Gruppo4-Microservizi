@@ -78,7 +78,7 @@ namespace Gruppo4.Microservizi.WebApi.Controllers
             }
             catch (InvalidCouponException e)
             {
-                return BadRequest(new { e.Message, e.Coupons});
+                return BadRequest(new { e.Message, e.Coupons });
             }
 
             catch (InvalidCustomerIdException e)
@@ -86,8 +86,12 @@ namespace Gruppo4.Microservizi.WebApi.Controllers
                 return BadRequest(new { e.Message });
             }
             catch (NotEnoughStockException e)
-            {                
+            {
                 return BadRequest(new { e.Message, e.Products });
+            }
+            catch (NegativeProductQuantityExeception e)
+            {
+                return BadRequest(new { e.Message, e.Product });
             }
             catch { throw; }
 
