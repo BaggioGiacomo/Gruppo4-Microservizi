@@ -117,7 +117,7 @@ namespace Gruppo4.Microservizi.AppCore.Services
             order.TotalPrice = await CalculateTotal(order);
             var discount = await CalculateDiscount(order);
             order.DiscountedPrice = (order.TotalPrice - discount.DiscountAbsolute) * (1 - discount.DiscountPercentage / 100);
-            order.DiscountAmount = order.TotalPrice - order.DiscountAmount;
+            order.DiscountAmount = order.TotalPrice - order.DiscountedPrice;
 
             await _orderRepository.InsertOrder(order);
             foreach (var coupon in order.Coupons)
