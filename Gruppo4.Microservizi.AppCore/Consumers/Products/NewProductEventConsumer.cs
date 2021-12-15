@@ -9,6 +9,10 @@ namespace Gruppo4.Microservizi.AppCore.Consumers.Products
     {
         private readonly IProductService _productService;
 
+        public NewProductEventConsumer()
+        {
+
+        }
         public NewProductEventConsumer(IProductService productService)
         {
             _productService = productService;
