@@ -116,8 +116,8 @@ namespace Gruppo4.Microservizi.AppCore.Services
             //Total Price
             order.TotalPrice = await CalculateTotal(order);
             var discount = await CalculateDiscount(order);
-            order.DiscountAmount = (order.TotalPrice - discount.DiscountAbsolute) * (1 - discount.DiscountPercentage / 100);
-            order.DiscountedPrice = order.TotalPrice - order.DiscountAmount;
+            order.DiscountedPrice = (order.TotalPrice - discount.DiscountAbsolute) * (1 - discount.DiscountPercentage / 100);
+            order.DiscountAmount = order.TotalPrice - order.DiscountAmount;
 
             await _orderRepository.InsertOrder(order);
             foreach (var coupon in order.Coupons)
@@ -142,14 +142,14 @@ namespace Gruppo4.Microservizi.AppCore.Services
             List<ProductContrib> productsNotInStock = new List<ProductContrib>();
             foreach (var product in order.Products)
             {
-                if (! (await _productService.HasEnoughStocked(product.Id, product.Quantity)))
+                if (!(await _productService.HasEnoughStocked(product.Id, product.Quantity)))
                 {
                     productsNotInStock.Add(product);
                 }
             }
 
             if (productsNotInStock.Any())
-            {                
+            {
                 throw new NotEnoughStockException("Some products are not in stock.", productsNotInStock);
             }
 
@@ -167,7 +167,7 @@ namespace Gruppo4.Microservizi.AppCore.Services
             }
 
             if (invalidCoupons.Any())
-            {                
+            {
                 throw new InvalidCouponException("Some coupon codes are invalid.", invalidCoupons);
             }
 
