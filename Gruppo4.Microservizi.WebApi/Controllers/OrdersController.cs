@@ -89,7 +89,7 @@ namespace Gruppo4.Microservizi.WebApi.Controllers
             {
                 return BadRequest(new { e.Message, e.Products });
             }
-            catch (NegativeProductQuantityExeception e)
+            catch (NegativeOrZeroProductQuantityException e)
             {
                 return BadRequest(new { e.Message, e.Product });
             }

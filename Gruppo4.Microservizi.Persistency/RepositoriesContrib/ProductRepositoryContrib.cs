@@ -36,7 +36,7 @@ namespace Gruppo4.Microservizi.Persistency.RepositoriesContrib
             //Parameter id=productId, quantity=quantity request
             //Check quantity stock product 
             ProductContrib product = GetProductById(id).Result;
-            if (product != null && product.Quantity > quantity)
+            if (product != null && product.Quantity >= quantity)
             {
                 return true;
             }

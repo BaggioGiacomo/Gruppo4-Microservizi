@@ -127,8 +127,13 @@ namespace Gruppo4.Microservizi.AppCore.Services
             foreach (var product in order.Products)
             {
                 var tempProduct = await _productService.GetProductById(product.Id);
+                tempProduct.Quantity = tempProduct.Quantity - product.Quantity;
+                await _productService.UpdateProduct(tempProduct);
                 await _ordersHasProductService.InsertProductHasOrder(new OrdersHasProductContrib { Orders_Id = order.Id, Product_Id = product.Id, PriceAtTheMoment = tempProduct.Price, Quantity = product.Quantity });
             }
+
+
+
         }
 
         public async Task UpdateOrder(Order order)
@@ -151,7 +156,7 @@ namespace Gruppo4.Microservizi.AppCore.Services
                 }
                 else
                 {
-                    throw new NegativeProductQuantityExeception("Negative product quantity inserted", product);
+                    throw new NegativeOrZeroProductQuantityException("Negative Or Zero product quantity inserted", product);
                 }
 
             }
