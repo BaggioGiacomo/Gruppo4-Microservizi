@@ -5,6 +5,7 @@ using Gruppo4.Microservizi.AppCore.Models.ModelContrib;
 using Gruppo4.Microservizi.WebApi.DTOs;
 using Gruppo4MicroserviziDTO.DTOs;
 using Microsoft.AspNetCore.Mvc;
+using System.Text;
 using System.Text.Json;
 
 namespace Gruppo4.Microservizi.WebApi.Controllers
@@ -77,17 +78,16 @@ namespace Gruppo4.Microservizi.WebApi.Controllers
             }
             catch (InvalidCouponException e)
             {
-                return BadRequest(new { InvalidCoupons = e.Message });
+                return BadRequest(new { e.Message, e.Coupons});
             }
 
             catch (InvalidCustomerIdException e)
             {
-                return BadRequest(new { message = e.Message });
+                return BadRequest(new { e.Message });
             }
             catch (NotEnoughStockException e)
-            {
-                // Todo: controllare json di ritorno prodotti mancanti
-                return BadRequest(new { MissingProducts = e.Message });
+            {                
+                return BadRequest(new { e.Message, e.Products });
             }
             catch { throw; }
 

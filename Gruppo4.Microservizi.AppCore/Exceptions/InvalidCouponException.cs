@@ -3,22 +3,28 @@ using System.Runtime.Serialization;
 
 namespace Gruppo4.Microservizi.AppCore.Exceptions
 {
-    public class InvalidCouponException : ApplicationException
+    public class InvalidCouponException : Exception
     {
-        public InvalidCouponException()
+        public IEnumerable<Coupon> Coupons { get; set; }        
+
+        public InvalidCouponException(IEnumerable<Coupon> coupons)
         {
+            Coupons = coupons;
         }
 
-        public InvalidCouponException(string? message) : base(message)
+        public InvalidCouponException(string? message, IEnumerable<Coupon> coupons) : base(message)
         {
+            Coupons = coupons;
         }
 
-        public InvalidCouponException(string? message, Exception? innerException) : base(message, innerException)
+        public InvalidCouponException(string? message, Exception? innerException, IEnumerable<Coupon> coupons) : base(message, innerException)
         {
+            Coupons = coupons;
         }
 
-        protected InvalidCouponException(SerializationInfo info, StreamingContext context) : base(info, context)
+        protected InvalidCouponException(SerializationInfo info, StreamingContext context, IEnumerable<Coupon> coupons) : base(info, context)
         {
+            Coupons = coupons;
         }
     }
 }

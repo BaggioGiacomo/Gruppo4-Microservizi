@@ -2,7 +2,7 @@
 
 namespace Gruppo4.Microservizi.AppCore.Exceptions
 {
-    public class InvalidCustomerIdException : ApplicationException
+    public class InvalidCustomerIdException : Exception
     {
         public InvalidCustomerIdException()
         {

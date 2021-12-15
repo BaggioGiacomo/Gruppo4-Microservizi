@@ -17,12 +17,6 @@ namespace Gruppo4.Microservizi.AppCore.Services
         private readonly IOrdersHasProductService _ordersHasProductService;
 
 
-
-        public OrderService()
-        {
-
-        }
-
         public OrderService(IOrderRepository orderRepository, IProductService productService, ICustomerService customerService, ICouponService couponService, ICouponHasOrdersService couponHasOrdersService, IOrdersHasProductService ordersHasProductService)
         {
             _orderRepository = orderRepository;
@@ -148,16 +142,15 @@ namespace Gruppo4.Microservizi.AppCore.Services
             List<ProductContrib> productsNotInStock = new List<ProductContrib>();
             foreach (var product in order.Products)
             {
-                if (!_productService.HasEnoughStocked(product.Id, product.Quantity).Result)
+                if (! (await _productService.HasEnoughStocked(product.Id, product.Quantity)))
                 {
                     productsNotInStock.Add(product);
                 }
             }
 
             if (productsNotInStock.Any())
-            {
-                var json = JsonSerializer.Serialize(productsNotInStock);
-                throw new NotEnoughStockException(json);
+            {                
+                throw new NotEnoughStockException("Some products are not in stock.", productsNotInStock);
             }
 
         }
@@ -170,14 +163,12 @@ namespace Gruppo4.Microservizi.AppCore.Services
                 if (temp == null)
                 {
                     invalidCoupons.Add(new Coupon { Code = coupon.Code });
-
                 }
             }
 
             if (invalidCoupons.Any())
-            {
-                var json = JsonSerializer.Serialize(invalidCoupons);
-                throw new InvalidCouponException(json);
+            {                
+                throw new InvalidCouponException("Some coupon codes are invalid.", invalidCoupons);
             }
 
         }
