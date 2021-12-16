@@ -45,36 +45,36 @@ builder.Services.AddMassTransit(x =>
                 credentials.Password("t0mDd3KRsJkXRV3DXzmCUfRWmDFbFu42");
             });
 
-        rabbitConfigurator.ReceiveEndpoint("test_1", e =>
+        rabbitConfigurator.ReceiveEndpoint("create_client", e =>
         {
             e.Consumer<CreateClientEventConsumer>();
         });
-        rabbitConfigurator.ReceiveEndpoint("test_2", e =>
+        rabbitConfigurator.ReceiveEndpoint("delete_client", e =>
         {
             e.Consumer<DeleteClientEventConsumer>();
         });
 
-        rabbitConfigurator.ReceiveEndpoint("test_2", e =>
+        rabbitConfigurator.ReceiveEndpoint("update_client", e =>
         {
             e.Consumer<UpdateClientEventConsumer>();
         });
 
-        rabbitConfigurator.ReceiveEndpoint("test_2", e =>
+        rabbitConfigurator.ReceiveEndpoint("delete_product", e =>
         {
             e.Consumer<DeleteProductEventConsumer>();
         });
 
-        rabbitConfigurator.ReceiveEndpoint("test_2", e =>
+        rabbitConfigurator.ReceiveEndpoint("new_product", e =>
         {
             e.Consumer<NewProductEventConsumer>();
         });
 
-        rabbitConfigurator.ReceiveEndpoint("test_2", e =>
+        rabbitConfigurator.ReceiveEndpoint("update_product", e =>
         {
             e.Consumer<UpdateProductEventConsumer>();
         });
 
-        rabbitConfigurator.ReceiveEndpoint("test_2", e =>
+        rabbitConfigurator.ReceiveEndpoint("newrefill_product", e =>
         {
             e.Consumer<NewRefillEventConsumer>();
         });
