@@ -35,6 +35,13 @@ builder.Services.AddScoped<IOrdersHasProductRepository, OrdersHasProductReposito
 builder.Services.AddMassTransit(x =>
 {
     x.AddConsumer<CreateClientEventConsumer>();
+    x.AddConsumer<DeleteClientEventConsumer>();
+    x.AddConsumer<UpdateClientEventConsumer>();
+    x.AddConsumer<DeleteProductEventConsumer>();
+    x.AddConsumer<NewProductEventConsumer>();
+    x.AddConsumer<UpdateProductEventConsumer>();
+    x.AddConsumer<NewRefillEventConsumer>();
+
 
 
     x.UsingRabbitMq((context, rabbitConfigurator) =>
