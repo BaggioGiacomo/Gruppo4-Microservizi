@@ -34,8 +34,13 @@ builder.Services.AddScoped<IOrdersHasProductRepository, OrdersHasProductReposito
 
 builder.Services.AddMassTransit(x =>
 {
+    x.AddConsumer<CreateClientEventConsumer>();
+
+
     x.UsingRabbitMq((context, rabbitConfigurator) =>
     {
+
+        
 
         rabbitConfigurator.Host(
             "roedeer-01.rmq.cloudamqp.com",
