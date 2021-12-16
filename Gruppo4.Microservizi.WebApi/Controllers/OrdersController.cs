@@ -118,7 +118,8 @@ namespace Gruppo4.Microservizi.WebApi.Controllers
 
             await _endpoint.Publish(newOrderEvent);
 
-            return CreatedAtAction(nameof(GetOrderAsync), createdOrder);
+            return CreatedAtAction("get", createdOrder);
+
         }
 
         [HttpDelete]
