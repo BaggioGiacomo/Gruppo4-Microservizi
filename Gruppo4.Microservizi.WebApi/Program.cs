@@ -58,36 +58,36 @@ builder.Services.AddMassTransit(x =>
                 credentials.Password("t0mDd3KRsJkXRV3DXzmCUfRWmDFbFu42");
             });
 
-        rabbitConfigurator.ReceiveEndpoint("orders_create_client", e =>
+        rabbitConfigurator.ReceiveEndpoint("gruppo4-orchestratore-create_client", e =>
         {
             e.Consumer<CreateClientEventConsumer>(context);
         });
-        rabbitConfigurator.ReceiveEndpoint("orders_delete_client", e =>
+        rabbitConfigurator.ReceiveEndpoint("gruppo4-orchestratore-delete_client", e =>
         {
             e.Consumer<DeleteClientEventConsumer>(context);
         });
 
-        rabbitConfigurator.ReceiveEndpoint("orders_update_client", e =>
+        rabbitConfigurator.ReceiveEndpoint("gruppo4-orchestratore-update_client", e =>
         {
             e.Consumer<UpdateClientEventConsumer>(context);
         });
 
-        rabbitConfigurator.ReceiveEndpoint("orders_delete_product", e =>
+        rabbitConfigurator.ReceiveEndpoint("gruppo4-orchestratore-delete_product", e =>
         {
             e.Consumer<DeleteProductEventConsumer>(context);
         });
 
-        rabbitConfigurator.ReceiveEndpoint("orders_new_product", e =>
+        rabbitConfigurator.ReceiveEndpoint("gruppo4-orchestratore-new_product", e =>
         {
             e.Consumer<NewProductEventConsumer>(context);
         });
 
-        rabbitConfigurator.ReceiveEndpoint("orders_update_product", e =>
+        rabbitConfigurator.ReceiveEndpoint("gruppo4-orchestratore-update_product", e =>
         {
             e.Consumer<UpdateProductEventConsumer>(context);
         });
 
-        rabbitConfigurator.ReceiveEndpoint("orders_newrefill_product", e =>
+        rabbitConfigurator.ReceiveEndpoint("gruppo4-orchestratore-newrefill_product", e =>
         {
             e.Consumer<NewRefillEventConsumer>(context);
         });
