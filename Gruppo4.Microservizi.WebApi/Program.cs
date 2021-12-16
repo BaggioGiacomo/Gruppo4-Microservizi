@@ -38,43 +38,43 @@ builder.Services.AddMassTransit(x =>
     {
         rabbitConfigurator.Host(
             "roedeer-01.rmq.cloudamqp.com",
-            "/",
+            "vpeeygzh",
             credentials =>
             {
                 credentials.Username("vpeeygzh");
                 credentials.Password("t0mDd3KRsJkXRV3DXzmCUfRWmDFbFu42");
             });
 
-        rabbitConfigurator.ReceiveEndpoint("create_client", e =>
+        rabbitConfigurator.ReceiveEndpoint("orders_create_client", e =>
         {
             e.Consumer<CreateClientEventConsumer>();
         });
-        rabbitConfigurator.ReceiveEndpoint("delete_client", e =>
+        rabbitConfigurator.ReceiveEndpoint("orders_delete_client", e =>
         {
             e.Consumer<DeleteClientEventConsumer>();
         });
 
-        rabbitConfigurator.ReceiveEndpoint("update_client", e =>
+        rabbitConfigurator.ReceiveEndpoint("orders_update_client", e =>
         {
             e.Consumer<UpdateClientEventConsumer>();
         });
 
-        rabbitConfigurator.ReceiveEndpoint("delete_product", e =>
+        rabbitConfigurator.ReceiveEndpoint("orders_delete_product", e =>
         {
             e.Consumer<DeleteProductEventConsumer>();
         });
 
-        rabbitConfigurator.ReceiveEndpoint("new_product", e =>
+        rabbitConfigurator.ReceiveEndpoint("orders_new_product", e =>
         {
             e.Consumer<NewProductEventConsumer>();
         });
 
-        rabbitConfigurator.ReceiveEndpoint("update_product", e =>
+        rabbitConfigurator.ReceiveEndpoint("orders_update_product", e =>
         {
             e.Consumer<UpdateProductEventConsumer>();
         });
 
-        rabbitConfigurator.ReceiveEndpoint("newrefill_product", e =>
+        rabbitConfigurator.ReceiveEndpoint("orders_newrefill_product", e =>
         {
             e.Consumer<NewRefillEventConsumer>();
         });
