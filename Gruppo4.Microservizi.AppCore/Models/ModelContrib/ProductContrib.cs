@@ -5,7 +5,7 @@ namespace Gruppo4.Microservizi.AppCore.Models.ModelContrib
     [Table("Product")]
     public class ProductContrib
     {
-        [Key]
+        [ExplicitKey]
         public int Id { get; set; }
         public string Name { get; set; }
         public int Quantity { get; set; }
