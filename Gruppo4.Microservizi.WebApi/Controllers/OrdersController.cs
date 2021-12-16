@@ -116,7 +116,7 @@ namespace Gruppo4.Microservizi.WebApi.Controllers
                 });
             }
 
-            await _endpoint.Publish(newOrderEvent);
+            await _endpoint.Publish<NewOrderEvent>(newOrderEvent);
 
             //return CreatedAtAction("get", createdOrder);
             //TODO: controllare ritorno
