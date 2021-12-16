@@ -10,12 +10,12 @@
   <ItemGroup>
     <Folder Include="Consumers\" />
     <PackageReference Include="Dapper.Contrib" Version="2.0.78" />
-    <PackageReference Include="Gruppo3.ClientiDTO.Domain" Version="1.0.0" />
+    <PackageReference Include="Gruppo3.ClientiDTO.Domain" Version="1.1.0" />
     <PackageReference Include="MacNuget.Warehouse.Events" Version="0.0.1" />
     <PackageReference Include="MassTransit" Version="7.3.0" />
     <PackageReference Include="MassTransit.AspNetCore" Version="7.3.0" />
     <PackageReference Include="MassTransit.RabbitMQ" Version="7.3.0" />
-    <PackageReference Include="Microservices.Ecommerce.DTO" Version="2.2.0" />
+    <PackageReference Include="Microservices.Ecommerce.DTO" Version="3.0.1" />
   </ItemGroup>
 
 </Project>
