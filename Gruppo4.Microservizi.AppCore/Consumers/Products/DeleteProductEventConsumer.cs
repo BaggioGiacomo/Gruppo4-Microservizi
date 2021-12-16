@@ -7,11 +7,6 @@ namespace Gruppo4.Microservizi.AppCore.Consumers.Products
     public class DeleteProductEventConsumer : IConsumer<DeleteProductEvent>
     {
         private readonly IProductService _productService;
-
-        public DeleteProductEventConsumer()
-        {
-
-        }
         public DeleteProductEventConsumer(IProductService productService)
         {
             _productService = productService;

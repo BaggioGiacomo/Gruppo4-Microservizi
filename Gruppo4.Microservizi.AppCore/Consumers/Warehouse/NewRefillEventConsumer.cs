@@ -9,11 +9,6 @@ namespace Gruppo4.Microservizi.AppCore.Consumers.Warehouse
     {
         private readonly IProductService _productService;
 
-        public NewRefillEventConsumer()
-        {
-
-        }
-
         public NewRefillEventConsumer(IProductService productService)
         {
             _productService = productService;
