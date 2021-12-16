@@ -19,9 +19,10 @@ namespace Gruppo4.Microservizi.AppCore.Consumers.Warehouse
             var oldProduct = await _productService.GetProductById(context.Message.Product.Id);
             await _productService.UpdateProduct(new ProductContrib
             {
-                Id = context.Message.Product.Id,
-                Quantity = oldProduct.Quantity + context.Message.Product.Quantity
-
+                Id = oldProduct.Id,
+                Quantity = oldProduct.Quantity + context.Message.Product.Quantity,
+                Name = oldProduct.Name,
+                Price = oldProduct.Price
             });
         }
     }
